@@ -15,7 +15,7 @@ This lab focuses on exploiting a SQL injection vulnerability in the WHERE clause
 
 The SQL injection payload used to bypass the filter was:
 
-[SQL Injection Exploit](https://0a9d00610413b58b801e0d1700e200ec.web-security-academy.net/filter?category=Gifts%27+OR+1=1--)
 ```sql
+[SQL Injection Exploit](https://0a9d00610413b58b801e0d1700e200ec.web-security-academy.net/filter?category=Gifts%27+OR+1=1--)
 'OR 1=1--
 ```
