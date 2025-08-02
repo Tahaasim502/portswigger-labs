@@ -1,5 +1,5 @@
 ```sql
-🧠 SQL Injection — Notes & Understanding
+## 🧠 SQL Injection — Notes & Understanding
 
 📌 1. What is SQL Injection?
 
