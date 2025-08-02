@@ -1,8 +1,13 @@
-🧠 Web Security Academy Labs – PortSwigger
+## 🧠 Web Security Academy Labs – PortSwigger
+
 Welcome to my Web Security Academy practice repository!
+
 This is where I document my journey in learning web application security through hands-on labs provided by PortSwigger.
 
-🚀 About the Project
+---
+
+## 🚀 About the Project
+
 This repository includes:
 
 ✅ Solved labs with explanations
