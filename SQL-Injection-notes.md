@@ -1,103 +1,96 @@
-```
-🧠 SQL Injection — Notes & Understanding
+# SQL Injection — Notes & Concepts
 
-📌 1. What is SQL Injection?
+---
 
-SQL Injection is a vulnerability that occurs when an attacker can manipulate the SQL queries that an application sends to the database. This can lead to:
+## 1. What is SQL Injection?
 
-- Unauthorized data access
+SQL Injection is a vulnerability that allows an attacker to interfere with the queries an application sends to its database. This can lead to unauthorized data access or manipulation.
 
-- Data manipulation
+---
 
-- Authentication bypass
+## 2. Web Application Architecture
 
-In severe cases, full system compromise
+Web applications usually have **three layers**:
 
-🌐 2. Understanding Web Applications
+- **Presentation Layer**: The user interface, e.g., the browser.  
+- **Logic Layer**: The backend code that processes requests.  
+- **Storage Layer**: The database storing data, e.g., MySQL, MSSQL.
 
-Web apps are usually database-driven. They operate across 3 core layers:
+### How They Interact
 
-Presentation Layer: The front-end (browser/UI)
+When a user applies a filter (e.g., price = $50):
 
-Logic Layer: Backend server logic (e.g., Node.js, PHP)
+1. The browser sends a request to the backend.  
+2. The backend generates a SQL query to retrieve filtered data.  
+3. The database returns the result to the backend, which sends it back to the browser.
 
-Storage Layer: The database (e.g., MySQL, MSSQL)
+---
 
-⚙️ How They Work
+## 3. Four-Layer Architecture (Modern)
 
-When a user interacts with the app (e.g., filters products):
+Sometimes, an additional **API layer** is added between Logic and Storage to expose business logic securely and improve scalability.
 
-The browser (presentation layer) sends the request
+---
 
-Backend (logic layer) handles it and queries the database
+## 4. Detecting SQL Injection
 
-The database (storage layer) returns relevant data
+- Using single quotes `'` to test for errors.  
+- Boolean conditions like `OR 1=1` or `OR 1=2` in inputs.  
+- Injection can occur in `SELECT`, `UPDATE`, `INSERT`, and `ORDER BY` SQL statements.
 
-🛍️ Example: On an e-commerce site, filtering by price:
+---
 
-SELECT * FROM products WHERE price = 50 AND released = 1
+## 5. Example: How SQL Works with User Input
 
-🔄 3. Evolving to Four-Layer Architecture
-
-Many modern apps now use a 4-layer architecture, adding an API layer between logic and storage:
-
-This API layer (Application Programming Interface) manages communication and business logic.
-
-Benefits: Scalability, separation of concerns, code reuse.
-
-🧪 4. How to Detect SQL Injection
-Test with ' (single quote) to trigger errors
-
-Use Boolean payloads:
-
-OR 1=1, OR 1=2
-
-Look for vulnerable SQL statements:
-
-WHERE, SELECT, INSERT, UPDATE, ORDER BY, etc.
-
-📥 5. How SQL Queries Work with User Input
-
-Given:
-
+URL:  
 https://giftswebsite.com/products?price=100
 
-The backend might run:
+sql
+Copy
+Edit
 
-SELECT * FROM products WHERE price = 100 AND released = 1
-
-🚨 Injected Variant
-
+Corresponding SQL query:  
+```sql
+SELECT * FROM products WHERE price = 100 AND released = 1;
+Injection Example
+URL:
 https://giftswebsite.com/products?price=100'--
-
 Becomes:
 
-SELECT * FROM products WHERE price = 100'--' AND released = 1
+sql
+Copy
+Edit
+SELECT * FROM products WHERE price = 100'--' AND released = 1;
+The -- comments out the rest of the query, bypassing the original filter.
 
--- comments out the rest of the query, potentially bypassing logic.
+OR-based Injection
+URL:
 
-✅ OR-Based Injection
+arduino
+Copy
+Edit
+https://giftswebsite.com/products?price=100' OR 1=1--
+Query:
 
-https://giftswebsite.com/products?price=100'+OR+1=1--
+sql
+Copy
+Edit
+SELECT * FROM products WHERE price = 100 OR 1=1-- AND released = 1;
+This always returns true and exposes all data.
 
-Yields:
+6. Subverting Application Logic
+By injecting SQL into login forms, attackers can bypass authentication:
 
-SELECT * FROM products WHERE price = 100 OR 1=1-- AND released = 1
-
-🚪 6. Subverting Application Logic
-
-You can bypass login forms by injecting SQL into the login fields.
-
-For example:
+Example input:
 
 Username: admin' --
 
-Password: (left blank)
+Password: (blank)
 
-The query becomes:
+Query becomes:
 
-SELECT * FROM users WHERE username = 'admin' --' AND password = ''
+SELECT * FROM users WHERE username = 'admin' --' AND password = '';
 
-This bypasses password checks entirely.
+Password check is ignored.
 
-'''
+---
