@@ -1,4 +1,4 @@
-```sql
+```
 🧠 SQL Injection — Notes & Understanding
 
 📌 1. What is SQL Injection?
@@ -98,6 +98,6 @@ The query becomes:
 
 SELECT * FROM users WHERE username = 'admin' --' AND password = ''
 
-```
-SELECT * FROM users WHERE username = 'admin' --' AND password = ''
 This bypasses password checks entirely.
+
+'''
