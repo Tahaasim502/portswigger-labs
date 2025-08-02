@@ -45,31 +45,29 @@ Sometimes, an additional **API layer** is added between Logic and Storage to exp
 URL:  
 https://giftswebsite.com/products?price=100
 
-sql
-Copy
-Edit
-
 Corresponding SQL query:  
 ```sql
 SELECT * FROM products WHERE price = 100 AND released = 1;
+```
+
 Injection Example
 URL:
+
 https://giftswebsite.com/products?price=100'--
+
 Becomes:
 
-sql
-Copy
-Edit
+```sql
 SELECT * FROM products WHERE price = 100'--' AND released = 1;
+```
 The -- comments out the rest of the query, bypassing the original filter.
 
 OR-based Injection
+
 URL:
 
-arduino
-Copy
-Edit
 https://giftswebsite.com/products?price=100' OR 1=1--
+
 Query:
 
 sql
