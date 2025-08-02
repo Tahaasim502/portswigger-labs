@@ -70,13 +70,16 @@ https://giftswebsite.com/products?price=100' OR 1=1--
 
 Query:
 
-sql
-Copy
-Edit
+```sql
 SELECT * FROM products WHERE price = 100 OR 1=1-- AND released = 1;
+```
+
 This always returns true and exposes all data.
 
-6. Subverting Application Logic
+---
+
+## 6. Subverting Application Logic
+
 By injecting SQL into login forms, attackers can bypass authentication:
 
 Example input:
@@ -87,8 +90,11 @@ Password: (blank)
 
 Query becomes:
 
+```sql
 SELECT * FROM users WHERE username = 'admin' --' AND password = '';
+```
 
 Password check is ignored.
+Hence its by passed.
 
 ---
