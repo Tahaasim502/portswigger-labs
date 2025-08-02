@@ -17,5 +17,5 @@ The sql injection payload to bypass the login was:
 
 ```sql
 administrator'--
-password : empty
+password : (leave empty)
 ```
