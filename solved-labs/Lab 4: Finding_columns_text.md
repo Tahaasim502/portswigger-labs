@@ -20,7 +20,8 @@ This lab focuses on identifying which columns in a SQL query can display string 
 
 ## Solution
 
-<img width="1303" height="589" alt="Screenshot (769)" src="https://github.com/user-attachments/assets/6a3501ce-ad3b-49f5-ba92779b93cf68cd"/>
+<img width="1303" height="589" alt="Screenshot (769)" src="https://github.com/user-attachments/assets/0df76271-8886-4caf-a05a-39938539d727" />
+
 
 ```sql
 'UNON SELECT NULL,'2VKil8',NULL--
