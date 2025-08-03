@@ -1,4 +1,4 @@
-#Lab 4: SQL Injection — Finding Columns Containing Text
+# Lab 4: SQL Injection — Finding Columns Containing Text
 
 ## Lab Overview
 
