@@ -1,10 +1,10 @@
-# Lab: File Path Traversal – Validation of File Extension with Null Byte Bypass
+# Lab 6: File Path Traversal – Validation of File Extension with Null Byte Bypass
 
 ## 📝 Description
 
 This lab features a File Path Traversal vulnerability where the application validates file extensions to block malicious files.
 
-However, using a null byte (%00) injection allows bypassing this extension check, tricking the app into accepting unauthorized files.
+However, using a null byte `(%00)` injection allows bypassing this extension check, tricking the app into accepting unauthorized files.
 
 ## 🎯 Objective
 
@@ -12,7 +12,7 @@ However, using a null byte (%00) injection allows bypassing this extension check
 
 - Bypass file extension validation using %00 to access restricted files.
 
-- Retrieve sensitive files such as /etc/passwd.
+- Retrieve sensitive files such as `/etc/passwd`.
 
 ## Solution
 
