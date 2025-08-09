@@ -1,6 +1,6 @@
 # Lab: File Path Traversal - Traversal Sequences Blocked with Absolute Path Bypass
 
-##📝 Description
+## 📝 Description
 
 This lab demonstrates a File Path Traversal vulnerability where the application attempts to block `../` sequences, but the restriction can be bypassed by supplying an absolute path to the target file.
 
