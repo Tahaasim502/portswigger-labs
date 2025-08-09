@@ -42,15 +42,15 @@ Path Traversal is a critical web vulnerability that allows attackers to access s
 
 Key learning highlights:
 
-- Understanding how ../ sequences enable directory traversal
+- Understanding how `../` sequences enable directory traversal
 
 - Exploiting path traversal vulnerabilities using only browser tools
 
 - Advanced bypass techniques:
 
-  - Nested traversal sequences (....//, ....\/)
-  - 
-  -URL encoding and double URL encoding of traversal payloads
+  - Nested traversal sequences `(....//, ....\/)`
+  
+  - URL encoding and double URL encoding of traversal payloads
 
 - Common obstacles and how filters can be circumvented
 
