@@ -17,6 +17,7 @@ Instead of using relative directory traversal `(../)`, an attacker can directly 
 ## Solution
 
 <img width="1366" height="424" alt="Screenshot (795)" src="https://github.com/user-attachments/assets/3309a3ab-eeee-4cb9-a740-8099df872193" />
+
 ```
 <img src ="/image?filename=/etc/passwd"
 ``
