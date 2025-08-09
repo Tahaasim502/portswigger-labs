@@ -20,4 +20,4 @@ Instead of using relative directory traversal `(../)`, an attacker can directly 
 
 ```
 <img src ="/image?filename=/etc/passwd"
-``
+```
