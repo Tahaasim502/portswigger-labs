@@ -21,4 +21,3 @@ By double-encoding the sequences, you can bypass the filter.
 ```
 <img src="/image/filename=%252e%252e%252f%252e%252e%252f%252e%252e%252fetc%252fpasswd">
 ```
-<ing
