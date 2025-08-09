@@ -45,21 +45,21 @@ https://insecure-website.com/loadImage?filename=../../../etc/passwd
 
 ## 🚧 Common Obstacles & Bypass Techniques
 
-Sometimes the app or server strips or blocks the ../ traversal sequences.
+Sometimes the app or server strips or blocks the `../` traversal sequences.
 
 To bypass this, attackers can use:
 
-Nested traversal sequences like ```....//``` or ```....\/```. When the app strips the inner part, it effectively becomes ../.
+Nested traversal sequences like `....//` or `....\/`. When the app strips the inner part, it effectively becomes `../`.
 
 URL Encoding can bypass filters:
 
-../ becomes %2e%2e%2f (. → %2e, / → %2f). Some servers fail to detect this and allow traversal.
+```../``` becomes ```%2e%2e%2f``` (`.` → `%2e`, `/` → `%2f`). Some servers fail to detect this and allow traversal.
 
 Double URL Encoding:
 
-Encoding % signs as well: %252e%252e%252f. This can bypass filters if the server decodes input twice.
+Encoding `%` signs as well: `%252e%252e%252f`. This can bypass filters if the server decodes input twice.
 
-Absolute paths can sometimes be used directly (if known), e.g., /var/www/images/../../../etc/passwd.
+Absolute paths can sometimes be used directly (if known), e.g., `/var/www/images/../../../etc/passwd`.
 
 Some systems require a file extension; attackers may append null byte injection to bypass checks:
 ```sql
